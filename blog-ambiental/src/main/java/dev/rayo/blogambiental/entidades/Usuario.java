@@ -23,8 +23,9 @@ import lombok.NoArgsConstructor;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String password;
+    private Long id;
+    private String nombre;
+    private String contraseña;
     private String email;
     @OneToMany(fetch=FetchType.LAZY,mappedBy="usuario",cascade=CascadeType.ALL)
     private List<Articulo> articulosPublicados;

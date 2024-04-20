@@ -19,10 +19,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class Parrafo {
+public class Parrafo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String cuerpo;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_articulo")

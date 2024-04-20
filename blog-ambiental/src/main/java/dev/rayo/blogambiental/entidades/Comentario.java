@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String cuerpo;
     private LocalDate fecha;
     @ManyToOne(fetch=FetchType.LAZY)

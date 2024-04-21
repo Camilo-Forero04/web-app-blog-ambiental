@@ -5,11 +5,8 @@
 package dev.rayo.blogambiental.entidades;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +20,7 @@ public class Tematica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
     @ManyToMany(mappedBy="tematicas")
     private List<Articulo> articulos;

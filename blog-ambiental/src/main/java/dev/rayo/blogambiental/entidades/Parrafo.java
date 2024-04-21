@@ -4,6 +4,7 @@
  */
 package dev.rayo.blogambiental.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,5 +27,6 @@ public class Parrafo {
     private String cuerpo;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_articulo")
+    @JsonIgnoreProperties("parrafos")
     private Articulo articulo;
 }

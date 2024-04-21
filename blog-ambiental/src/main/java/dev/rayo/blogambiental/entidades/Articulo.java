@@ -4,6 +4,7 @@
  */
 package dev.rayo.blogambiental.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,29 +32,40 @@ public class Articulo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
+
     private LocalDate fecha;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo", cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
     private List<Parrafo> parrafos;
+
     private boolean isAprobado;
-    @OneToOne
-    @JoinColumn(name = "id_imagen")
-    private Imagen imagen;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo", cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
+    private List<Imagen> imagenes;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
     private List<Comentario> comentarios;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
+    @JsonIgnoreProperties("articulosPublicados")
     private Usuario usuario;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tematica_articulo", joinColumns = @JoinColumn(name = "id_articulo", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tematica", referencedColumnName = "id")
     )
+    @JsonIgnoreProperties("articulos")
     private List<Tematica> tematicas;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tipo_articulo",joinColumns = @JoinColumn(name = "id_articulo", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tipo", referencedColumnName = "id")
     )
+    @JsonIgnoreProperties("articulos")
     private List<Tipo> tipos;
 }

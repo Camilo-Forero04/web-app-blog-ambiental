@@ -4,6 +4,7 @@
  */
 package dev.rayo.blogambiental.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,5 +29,6 @@ public class Comentario {
     private LocalDate fecha;
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="id_articulo")
+    @JsonIgnoreProperties("comentarios")
     private Articulo articulo;
 }

@@ -27,6 +27,6 @@ public class Usuario {
     private String nombre;
     private String contraseña;
     private String email;
-    @OneToMany(fetch=FetchType.LAZY,mappedBy="usuario",cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY,mappedBy="usuario")
     private List<Articulo> articulosPublicados;
 }

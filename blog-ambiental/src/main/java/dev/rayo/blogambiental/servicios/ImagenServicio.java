@@ -1,8 +1,10 @@
 package dev.rayo.blogambiental.servicios;
 
 
+import dev.rayo.blogambiental.entidades.Articulo;
 import dev.rayo.blogambiental.entidades.Imagen;
 import dev.rayo.blogambiental.excepciones.MiException;
+import dev.rayo.blogambiental.repositorios.ArticuloRepositorio;
 import dev.rayo.blogambiental.repositorios.ImagenRepositorio;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
@@ -16,16 +18,23 @@ public class ImagenServicio {
     
     @Autowired
     private ImagenRepositorio imagenRepo;
+    @Autowired
+    private ArticuloRepositorio articuloRepo;
     
     @Transactional
-    private Imagen guardar(MultipartFile archivo) throws MiException{
+    private Imagen guardar(MultipartFile archivo, Long idArticulo) throws MiException{
         Imagen imagen = new Imagen();
         try{
-            if (archivo != null) {
+            if (archivo != null && idArticulo != null) {
                 imagen.setMime(archivo.getContentType());
                 imagen.setName(archivo.getName());
                 imagen.setContenido(archivo.getBytes());
-                return imagenRepo.save(imagen);
+                Optional<Articulo> respuesta = articuloRepo.findById(idArticulo);
+                if (respuesta.isPresent()) {
+                    Articulo articulo = respuesta.get();
+                    imagen.setArticulo(articulo);
+                    return imagenRepo.save(imagen);
+                }
             }
         }catch(Exception ex){
             System.out.println(ex.getMessage());

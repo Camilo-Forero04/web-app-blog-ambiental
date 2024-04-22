@@ -23,7 +23,7 @@ public class ComentarioServicio {
     @Autowired
     private ArticuloRepositorio articuloRepositorio;
 
-    private void validar(String cuerpo)throws MiException {
+    public void validar(String cuerpo)throws MiException {
         if (cuerpo.isEmpty()) {
             throw new MiException("El cuerpo del comentario no puede estar vacio");
         }
@@ -31,7 +31,7 @@ public class ComentarioServicio {
     }
 
     @Transactional
-    private void registrar(String cuerpo,  Long idArticulo) throws MiException {
+    public void registrar(String cuerpo,  Long idArticulo) throws MiException {
         validar(cuerpo);
         Comentario comentario = new Comentario();
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
@@ -44,7 +44,7 @@ public class ComentarioServicio {
         }
     }
     @Transactional
-    private void actualizar(Long idComentario, String cuerpo)throws MiException{
+    public void actualizar(Long idComentario, String cuerpo)throws MiException{
         validar(cuerpo);
         Optional<Comentario> respuesta = comentarioRepositorio.findById(idComentario);
 
@@ -56,7 +56,7 @@ public class ComentarioServicio {
     }
 
     @Transactional
-    private List<Comentario> listarTodosComentarios(Long idArticulo){
+    public List<Comentario> listarTodosComentarios(Long idArticulo){
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
         List<Comentario> comentarios = null;
         if (respuesta.isPresent()){
@@ -67,7 +67,7 @@ public class ComentarioServicio {
     }
 
     @Transactional
-    private void eliminar(Long id){
+    public void eliminar(Long id){
         comentarioRepositorio.deleteById(id);
     }
 }

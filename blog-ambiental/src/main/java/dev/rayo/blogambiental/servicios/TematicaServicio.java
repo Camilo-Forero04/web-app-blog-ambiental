@@ -34,7 +34,7 @@ public class TematicaServicio {
     }
     
     @Transactional
-    private Tematica asignarArticuloATipo(Long tipoId, Long articuloId){
+    public Tematica asignarArticuloATipo(Long tipoId, Long articuloId){
         Optional<Tematica> respuestaTematica = tematicaRepo.findById(tipoId);
         Optional<Articulo> respuestaArticulo = articuloRepo.findById(articuloId);
         if (respuestaArticulo.isPresent() && respuestaTematica.isPresent()) {
@@ -47,14 +47,14 @@ public class TematicaServicio {
     }
     
     @Transactional 
-    private void crearNuevaTematica(String nombre){
+    public void crearNuevaTematica(String nombre){
         Tematica tematica = new Tematica();
         tematica.setNombre(nombre);
         tematicaRepo.save(tematica);
     }
     
     @Transactional
-    private void actualizar(Long idTematica,String nuevoNombre){
+    public void actualizar(Long idTematica,String nuevoNombre){
         Optional<Tematica> respuesta = tematicaRepo.findById(idTematica);
         if (respuesta.isPresent()) {
             Tematica tematica = respuesta.get();
@@ -64,7 +64,7 @@ public class TematicaServicio {
     }
     
     @Transactional
-    private void eliminar(Long idTematica){
+    public void eliminar(Long idTematica){
         tematicaRepo.deleteById(idTematica);
     }
     

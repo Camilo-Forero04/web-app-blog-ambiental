@@ -55,4 +55,12 @@ public class UsuarioServicio {
     private void eliminar(Long id){
         usuarioRepo.deleteById(id);
     }
+    
+    public Usuario obtenerUsuario(Long id){
+        Optional<Usuario> respuesta = usuarioRepo.findById(id);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
+    }
 }

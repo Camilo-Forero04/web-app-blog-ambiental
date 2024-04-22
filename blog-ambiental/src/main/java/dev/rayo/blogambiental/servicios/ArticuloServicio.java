@@ -20,7 +20,7 @@ public class ArticuloServicio {
     @Autowired
     private ArticuloRepositorio articuloRepo;
     @Autowired
-    private UsuarioRepositorio usuarioRepo;
+    private UsuarioServicio usuarioServicio;
     
     @Transactional
     private void registrarArticulo(Long idUsuario, List<MultipartFile> archivo, String titulo, List<Parrafo> parrafos){
@@ -28,6 +28,7 @@ public class ArticuloServicio {
         articulo.setFecha(LocalDate.now());
         articulo.setParrafos(parrafos);
         articuloRepo.save(articulo);
+        usuarioServicio.obtenerUsuario(idUsuario);  
     }
     
     @Transactional

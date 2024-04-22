@@ -38,7 +38,7 @@ public class TipoServicio {
     }
     }
     @Transactional
-    private void registrar(String nombre) throws MiException {
+    public void registrar(String nombre) throws MiException {
         validar(nombre);
         Tipo tipo = new Tipo();
         tipo.setNombre(nombre);
@@ -46,7 +46,7 @@ public class TipoServicio {
     }
 
     @Transactional
-    private void actualizar(Long idTipo, String nombre)throws MiException{
+    public void actualizar(Long idTipo, String nombre)throws MiException{
         validar(nombre);
         Optional<Tipo> tipoEncontrado = tipoRepositorio.findById(idTipo);
 
@@ -58,12 +58,12 @@ public class TipoServicio {
     }
 
     @Transactional
-    private void eliminar(Long id) {
+    public void eliminar(Long id) {
         tipoRepositorio.deleteById(id);
     }
 
     @Transactional
-    private Tipo assigmentArticuloToTipo(Long idTipo, Long idArticulo){
+    public Tipo assigmentArticuloToTipo(Long idTipo, Long idArticulo){
         Optional<Tipo> tipoEncontrado = tipoRepositorio.findById(idTipo);
         Optional<Articulo> articuloEncontrado = articuloRepositorio.findById(idArticulo);
         if(tipoEncontrado.isPresent() && articuloEncontrado.isPresent()){

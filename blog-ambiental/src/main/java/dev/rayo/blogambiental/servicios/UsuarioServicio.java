@@ -17,7 +17,7 @@ public class UsuarioServicio {
     @Autowired 
     private UsuarioRepositorio usuarioRepo;
     @Transactional
-    private void registrar(String nombre, String email, String contraseña) throws MiException{
+    public void registrar(String nombre, String email, String contraseña) throws MiException{
         validar(nombre,email,contraseña);
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
@@ -27,7 +27,7 @@ public class UsuarioServicio {
     }
     
     @Transactional
-    private void actualizar(Long idUsuario, String nombre, String email, String contraseña)throws MiException{
+    public void actualizar(Long idUsuario, String nombre, String email, String contraseña)throws MiException{
         validar(nombre,email,contraseña);
         Optional<Usuario> respuesta = usuarioRepo.findById(idUsuario);
         
@@ -52,7 +52,7 @@ public class UsuarioServicio {
         }
     }
     @Transactional
-    private void eliminar(Long id){
+    public void eliminar(Long id){
         usuarioRepo.deleteById(id);
     }
     

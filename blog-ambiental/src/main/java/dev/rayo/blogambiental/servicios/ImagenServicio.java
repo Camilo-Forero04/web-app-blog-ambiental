@@ -22,7 +22,7 @@ public class ImagenServicio {
     private ArticuloRepositorio articuloRepo;
     
     @Transactional
-    private Imagen guardar(MultipartFile archivo, Long idArticulo) throws MiException{
+    public Imagen guardar(MultipartFile archivo, Long idArticulo) throws MiException{
         Imagen imagen = new Imagen();
         try{
             if (archivo != null && idArticulo != null) {

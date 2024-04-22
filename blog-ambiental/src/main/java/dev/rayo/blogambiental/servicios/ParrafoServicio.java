@@ -28,7 +28,7 @@ public class ParrafoServicio {
     }
 
     @Transactional
-    private void registrar(String cuerpo,  Long idArticulo) throws MiException {
+    public void registrar(String cuerpo,  Long idArticulo) throws MiException {
         validar(cuerpo);
         Parrafo parrafo = new Parrafo();
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
@@ -42,7 +42,7 @@ public class ParrafoServicio {
     }
 
     @Transactional
-    private void actualizar(Long idParrafo, String cuerpo)throws MiException{
+    public void actualizar(Long idParrafo, String cuerpo)throws MiException{
         validar(cuerpo);
         Optional<Parrafo> respuesta = parrafoRepositorio.findById(idParrafo);
 
@@ -54,7 +54,7 @@ public class ParrafoServicio {
     }
 
     @Transactional
-    private List<Parrafo> listarTodosParrafos(Long idArticulo){
+    public List<Parrafo> listarTodosParrafos(Long idArticulo){
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
         List<Parrafo> parrafos = null;
         if (respuesta.isPresent()){
@@ -65,7 +65,7 @@ public class ParrafoServicio {
     }
 
     @Transactional
-    private void eliminar(Long id){
+    public void eliminar(Long id){
         parrafoRepositorio.deleteById(id);
     }
 }

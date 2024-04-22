@@ -56,17 +56,6 @@ public class ComentarioServicio {
     }
 
     @Transactional
-    private Comentario buscar (Long idComentario){
-        Optional<Comentario> respuesta = comentarioRepositorio.findById(idComentario);
-        if (respuesta.isPresent()){
-            Comentario comentario = respuesta.get();
-            return comentario;
-        }else{
-            return null;
-        }
-    }
-
-    @Transactional
     private List<Comentario> listarTodosComentarios(Long idArticulo){
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
         List<Comentario> comentarios = null;

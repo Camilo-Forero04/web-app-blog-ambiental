@@ -31,7 +31,7 @@ public class ComentarioServicio {
     }
 
     @Transactional
-    public void registrar(String cuerpo,  Long idArticulo) throws MiException {
+    public Comentario registrar(String cuerpo,  Long idArticulo) throws MiException {
         validar(cuerpo);
         Comentario comentario = new Comentario();
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
@@ -40,8 +40,9 @@ public class ComentarioServicio {
             Articulo articulo = respuesta.get();
             comentario.setCuerpo(cuerpo);
             comentario.setArticulo(articulo);
-            comentarioRepositorio.save(comentario);
+            return comentarioRepositorio.save(comentario);
         }
+        return null;
     }
     @Transactional
     public void actualizar(Long idComentario, String cuerpo)throws MiException{

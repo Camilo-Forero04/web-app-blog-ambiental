@@ -173,6 +173,6 @@ public class ArticuloServicio {
         for (Tipo tp : tipos) {
             tipoServicio.assigmentArticuloToTipo(tp.getId(), articulo.getId());
         }
-    }
+    } 
     
 }

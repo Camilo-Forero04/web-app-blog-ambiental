@@ -4,6 +4,7 @@
  */
 package dev.rayo.blogambiental.servicios;
 
+import dev.rayo.blogambiental.entidades.Articulo;
 import dev.rayo.blogambiental.entidades.Usuario;
 import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.repositorios.UsuarioRepositorio;
@@ -17,12 +18,13 @@ public class UsuarioServicio {
     @Autowired 
     private UsuarioRepositorio usuarioRepo;
     @Transactional
-    public void registrar(String nombre, String email, String contraseña) throws MiException{
+    public void registrar(String nombre, String email, String contraseña, Articulo articulo) throws MiException{
         validar(nombre,email,contraseña);
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
         usuario.setContraseña(contraseña);
+        usuario.getArticulosPublicados().add(articulo);
         usuarioRepo.save(usuario);
     }
     
@@ -51,8 +53,23 @@ public class UsuarioServicio {
             throw new MiException("La contraseña debe ser mayor a 8");
         }
     }
+    
+    @Transactional
+    public void añadirArticulo(Usuario usuario, Articulo articulo){
+        usuario.getArticulosPublicados().add(articulo);
+        usuarioRepo.save(usuario);
+    }
+    
     @Transactional
     public void eliminar(Long id){
         usuarioRepo.deleteById(id);
+    }
+    
+    public Usuario obtenerUsuario(Long id){
+        Optional<Usuario> respuesta = usuarioRepo.findById(id);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
     }
 }

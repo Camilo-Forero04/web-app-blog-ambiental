@@ -7,6 +7,7 @@ import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.repositorios.ArticuloRepositorio;
 import dev.rayo.blogambiental.repositorios.ImagenRepositorio;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,9 +67,17 @@ public class ImagenServicio {
         }
         return null;
     }
-    
+
     @Transactional
     public void Eliminar(Long idImagen) {
         imagenRepo.deleteById(idImagen);
-    }   
+    }
+    
+    public List<Imagen> obtenerImagenes(Long idArticulo){
+        Optional<List<Imagen>> respuesta = imagenRepo.encontrarPorArticulo(idArticulo);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
+    }
 }

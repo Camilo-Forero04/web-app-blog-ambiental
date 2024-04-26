@@ -1,7 +1,6 @@
 package dev.rayo.blogambiental.servicios;
 
 import dev.rayo.blogambiental.entidades.Articulo;
-import dev.rayo.blogambiental.entidades.Imagen;
 import dev.rayo.blogambiental.entidades.Tipo;
 import dev.rayo.blogambiental.enumeraciones.TipoArticulo;
 import dev.rayo.blogambiental.excepciones.MiException;
@@ -10,6 +9,7 @@ import dev.rayo.blogambiental.repositorios.TipoRepositorio;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,22 +33,28 @@ public class TipoServicio {
     @Transactional
     @PostConstruct
     private void inizializar(){
-    for (TipoArticulo nombre: TipoArticulo.values()){
-        Tipo tipo = new Tipo();
-        tipo.setNombre(nombre.toString());
-        tipoRepositorio.save(tipo);
-    }
+        List<Tipo> tipos = tipoRepositorio.findAll();
+        if(tipos.isEmpty()) {
+            for (TipoArticulo nombre :TipoArticulo.values()) {
+                Tipo tipo = new Tipo();
+                tipo.setNombre(nombre.toString());
+                tipoRepositorio.save(tipo);
+            }
+        }
     }
     @Transactional
-    public void registrar(String nombre) throws MiException {
+    public Tipo registrar(Tipo tipoEntrada) throws MiException {
+        String nombre = tipoEntrada.getNombre();
         validar(nombre);
         Tipo tipo = new Tipo();
         tipo.setNombre(nombre);
         tipoRepositorio.save(tipo);
+        return tipo;
     }
 
     @Transactional
-    public void actualizar(Long idTipo, String nombre)throws MiException{
+    public Tipo actualizar(Long idTipo, Tipo tipoEntrada)throws MiException{
+        String nombre = tipoEntrada.getNombre();
         validar(nombre);
         Optional<Tipo> tipoEncontrado = tipoRepositorio.findById(idTipo);
 
@@ -56,6 +62,10 @@ public class TipoServicio {
             Tipo tipo = tipoEncontrado.get();
             tipo.setNombre(nombre);
             tipoRepositorio.save(tipo);
+            return tipo;
+        }
+        else{
+            return null;
         }
     }
 
@@ -78,5 +88,12 @@ public class TipoServicio {
             return tipoRepositorio.save(tipo); // se procede a guardar la entidad tipo
         }
         return null;
+    }
+
+    @Transactional
+    public List<Tipo> listarTodosServicios(){
+        List<Tipo> tipos = null;
+        tipos = tipoRepositorio.findAll();
+        return tipos;
     }
 }

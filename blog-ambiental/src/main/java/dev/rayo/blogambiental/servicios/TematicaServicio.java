@@ -25,11 +25,14 @@ public class TematicaServicio {
     
     @Transactional
     @PostConstruct
-    private void iniciarlizar(){
-        for (Problematica nombre : Problematica.values()) {
-            Tematica tematica = new Tematica();
-            tematica.setNombre(nombre.toString());
-            tematicaRepo.save(tematica);
+    private void iniciarlizar() {
+        List<Tematica> tematicas = tematicaRepo.findAll();
+        if (tematicas.isEmpty()) {
+            for (Problematica nombre : Problematica.values()) {
+                Tematica tematica = new Tematica();
+                tematica.setNombre(nombre.toString());
+                tematicaRepo.save(tematica);
+            }
         }
     }
     

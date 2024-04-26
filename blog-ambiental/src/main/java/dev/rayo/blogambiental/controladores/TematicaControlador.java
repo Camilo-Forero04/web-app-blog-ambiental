@@ -1,8 +1,9 @@
 package dev.rayo.blogambiental.controladores;
 
+import dev.rayo.blogambiental.entidades.Tematica;
 import dev.rayo.blogambiental.entidades.Tipo;
 import dev.rayo.blogambiental.excepciones.MiException;
-import dev.rayo.blogambiental.servicios.TipoServicio;
+import dev.rayo.blogambiental.servicios.TematicaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,35 +15,34 @@ import java.util.List;
 // esto es para la conexión de frontend con backend
 @CrossOrigin(origins="*")
 // para definir la url
-@RequestMapping("/tipos")
+@RequestMapping("/tematicas")
+public class TematicaControlador {
 
-public class TipoControlador {
     @Autowired
-    private TipoServicio tipoServicio;
+    private TematicaServicio tematicaServicio;
 
     @RequestMapping(value = "/listar",method = RequestMethod.GET)
-    public List<Tipo> getAllTypes(){
-        return tipoServicio.listarTodosTipos();
+    public List<Tematica> getAllTematics(){
+        return tematicaServicio.listarTodasTematicas();
     }
 
     @PostMapping("guardar")
-    public Tipo guardarTipo(@RequestBody Tipo tipoEntrada) throws MiException {
-        return tipoServicio.registrar(tipoEntrada);
+    public Tematica guardarTematica(@RequestBody Tematica tematicaEntrada) throws MiException {
+        return tematicaServicio.crearNuevaTematica(tematicaEntrada);
     }
 
     @PutMapping("modificar/{id}")
-    public Tipo modificarTipo(@RequestBody Tipo tipoEntrada,@PathVariable("id") Long id) throws MiException {
-        return tipoServicio.actualizar(id,tipoEntrada);
+    public Tematica modificarTematica(@RequestBody Tematica tematicaEntrada,@PathVariable("id") Long id) throws MiException {
+        return tematicaServicio.actualizar(id,tematicaEntrada);
     }
 
     @DeleteMapping("eliminar/{id}")
-    public ResponseEntity<Void> eliminarTipo(@PathVariable("id") Long id) throws MiException {
-        tipoServicio.eliminar(id);
+    public ResponseEntity<?> eliminarTematica(@PathVariable("id") Long id) throws MiException {
+        tematicaServicio.eliminar(id);
 
         // Return a 204 (no content) status code
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
-        //return ResponseEntity.noContent().build();
     }
 }

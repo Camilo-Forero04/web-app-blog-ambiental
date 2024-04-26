@@ -31,11 +31,14 @@ public class TipoServicio {
     @Transactional
     @PostConstruct
     private void inizializar(){
-    for (TipoArticulo nombre: TipoArticulo.values()){
-        Tipo tipo = new Tipo();
-        tipo.setNombre(nombre.toString());
-        tipoRepositorio.save(tipo);
-    }
+        List<Tipo> tipos = tipoRepositorio.findAll();
+        if(tipos.isEmpty()) {
+            for (TipoArticulo nombre :TipoArticulo.values()) {
+                Tipo tipo = new Tipo();
+                tipo.setNombre(nombre.toString());
+                tipoRepositorio.save(tipo);
+            }
+        }
     }
     @Transactional
     public Tipo registrar(Tipo tipoEntrada) throws MiException {

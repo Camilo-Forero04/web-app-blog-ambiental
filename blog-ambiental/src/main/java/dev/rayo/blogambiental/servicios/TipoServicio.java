@@ -91,7 +91,7 @@ public class TipoServicio {
     }
 
     @Transactional
-    public List<Tipo> listarTodosServicios(){
+    public List<Tipo> listarTodosTipos(){
         List<Tipo> tipos = null;
         tipos = tipoRepositorio.findAll();
         return tipos;

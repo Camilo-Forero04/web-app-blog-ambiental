@@ -164,7 +164,7 @@ public class ArticuloServicio {
     @Transactional
     private void agregarTematicas(List<Tematica> tematicas, Articulo articulo) throws MiException{
         for (Tematica t : tematicas) {
-            tematicaServicio.asignarArticuloATipo(t.getId(), articulo.getId());
+            tematicaServicio.asignarArticuloATematica(t.getId(), articulo.getId());
         }
     }
     

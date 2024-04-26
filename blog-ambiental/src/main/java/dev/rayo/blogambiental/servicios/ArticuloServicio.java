@@ -92,7 +92,7 @@ public class ArticuloServicio {
     }
     
     public List<Articulo> listarArticulosRelevantes(){
-        Optional<List<Articulo>>  respuesta = articuloRepo.listarArticulosRelevantes();
+        Optional<List<Articulo>>  respuesta = articuloRepo.listar5Articulos();
         if (respuesta.isPresent()) {
             return respuesta.get();
         }

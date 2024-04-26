@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImagenRepositorio extends JpaRepository<Imagen,Long> {
-    @Query("SELECT i FROM imagen i WHERE i.id_articulo = :id_articulo")
+    @Query("SELECT i FROM Imagen i WHERE i.articulo.id = :id_articulo")
     public Optional<List<Imagen>> encontrarPorArticulo(@Param("id_articulo") Long idArticulo);
-    
 }

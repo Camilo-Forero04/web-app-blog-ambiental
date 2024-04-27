@@ -18,18 +18,17 @@ public class UsuarioServicio {
     @Autowired 
     private UsuarioRepositorio usuarioRepo;
     @Transactional
-    public void registrar(String nombre, String email, String contraseña, Articulo articulo) throws MiException{
+    public Usuario registrar(String nombre, String email, String contraseña) throws MiException{
         validar(nombre,email,contraseña);
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
         usuario.setContraseña(contraseña);
-        usuario.getArticulosPublicados().add(articulo);
-        usuarioRepo.save(usuario);
+        return usuarioRepo.save(usuario);
     }
     
     @Transactional
-    public void actualizar(Long idUsuario, String nombre, String email, String contraseña)throws MiException{
+    public Usuario actualizar(Long idUsuario, String nombre, String email, String contraseña)throws MiException{
         validar(nombre,email,contraseña);
         Optional<Usuario> respuesta = usuarioRepo.findById(idUsuario);
         
@@ -39,8 +38,9 @@ public class UsuarioServicio {
             usuario.setNombre(nombre);
             usuario.setEmail(email);
             usuario.setContraseña(contraseña);
-            usuarioRepo.save(usuario);
+            return usuarioRepo.save(usuario);
         }
+        return null;
     }
     private void validar(String nombre, String email, String contraseña)throws MiException{
         if (nombre.isEmpty()) {

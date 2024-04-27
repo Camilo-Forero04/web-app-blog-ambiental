@@ -175,4 +175,16 @@ public class ArticuloServicio {
         }
     } 
     
+    public Articulo getById(Long idArticulo) throws MiException{
+ 
+        try{
+            Optional<Articulo> respuesta = articuloRepo.findById(idArticulo);
+            Articulo articulo = respuesta.get();
+            return articulo;
+            
+        }catch(Exception ex){
+            throw new MiException("No existe el articulo");
+        }
+    }
+    
 }

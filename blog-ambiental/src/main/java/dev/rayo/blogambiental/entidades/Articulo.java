@@ -48,7 +48,7 @@ public class Articulo {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
     private List<Comentario> comentarios;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     @JsonIgnoreProperties("articulosPublicados")
     private Usuario usuario;

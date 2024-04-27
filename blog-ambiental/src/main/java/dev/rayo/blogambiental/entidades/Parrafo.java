@@ -25,7 +25,7 @@ public class Parrafo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cuerpo;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_articulo")
     @JsonIgnoreProperties("parrafos")
     private Articulo articulo;

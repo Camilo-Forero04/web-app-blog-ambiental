@@ -28,7 +28,7 @@ public class ParrafoServicio {
     }
 
     @Transactional
-    public void registrar(String cuerpo,  Long idArticulo) throws MiException {
+    public Parrafo registrar(String cuerpo, long idArticulo) throws MiException {
         validar(cuerpo);
         Parrafo parrafo = new Parrafo();
         Optional<Articulo> respuesta = articuloRepositorio.findById(idArticulo);
@@ -38,11 +38,14 @@ public class ParrafoServicio {
             parrafo.setCuerpo(cuerpo);
             parrafo.setArticulo(articulo);
             parrafoRepositorio.save(parrafo);
+            return parrafo;
+        }else{
+            return null;
         }
     }
 
     @Transactional
-    public void actualizar(Long idParrafo, String cuerpo)throws MiException{
+    public Parrafo actualizar(Long idParrafo, String cuerpo)throws MiException{
         validar(cuerpo);
         Optional<Parrafo> respuesta = parrafoRepositorio.findById(idParrafo);
 
@@ -50,6 +53,9 @@ public class ParrafoServicio {
             Parrafo parrafo = respuesta.get();
             parrafo.setCuerpo(cuerpo);
             parrafoRepositorio.save(parrafo);
+            return parrafo;
+        }else{
+            return null;
         }
     }
 

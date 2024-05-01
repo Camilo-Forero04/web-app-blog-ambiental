@@ -12,6 +12,7 @@ import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.repositorios.ArticuloRepositorio;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,29 +38,35 @@ public class ArticuloServicio {
     private ComentarioServicio comentarioServicio;
     
     @Transactional
-    public void registrarArticulo(
+    public Articulo registrarArticulo(
             Long idUsuario, String titulo, List<MultipartFile> archivos,
-            List<Parrafo> parrafos, List<Tematica> tematicas,
-            List<Tipo> tipos
+            List<String> parrafos, List<Long> tematicasId,
+            List<Long> tiposId
     ) throws MiException {
         
-        Articulo articulo = new Articulo();
+        Articulo articulo1 = new Articulo();
+        
+        Articulo articulo = articuloRepo.save(articulo1);
+        
         articulo.setAprobado(false);
         articulo.setFecha(LocalDate.now());
         Usuario usuario = usuarioServicio.obtenerUsuario(idUsuario);
         articulo.setUsuario(usuario);
         articulo.setTitulo(titulo);
-        articulo.setParrafos(parrafos);
-        articulo.setTematicas(tematicas);
-        articulo.setTipos(tipos);
-        agregarParrafos(parrafos, articulo);
+        
+        List<Parrafo> parrafosSet = agregarParrafos(parrafos, articulo);
+        List<Tematica> tematicasSet = agregarTematicas(tematicasId, articulo);
+        List<Tipo> tiposSet = agregarTipos(tiposId, articulo);
+        
+        articulo.setParrafos(parrafosSet);
+        articulo.setTematicas(tematicasSet);
+        articulo.setTipos(tiposSet);
+        
         agregarImagenes(archivos, articulo);
-        agregarTematicas(tematicas, articulo);
-        agregarTipos(tipos, articulo);
         List<Imagen> imagenes = imagenServicio.obtenerImagenes(articulo.getId());
         articulo.setImagenes(imagenes);
         agregarUsuario(usuario, articulo);
-        articuloRepo.save(articulo);
+        return articuloRepo.save(articulo);
     }
     
     @Transactional
@@ -100,10 +107,10 @@ public class ArticuloServicio {
     }
     
     @Transactional
-    public void actualizarArticulo(
-            Long idUsuario, Long idArticulo, String titulo, List<MultipartFile> archivos,
-            List<Parrafo> parrafos, List<Tematica> tematicas,
-            List<Tipo> tipos, List<Comentario> comentarios
+    public Articulo actualizarArticulo(
+            Long idArticulo, String titulo, List<MultipartFile> archivos,
+            List<String> parrafos, List<Long> tematicas,
+            List<Long> tipos
     ) throws MiException {
         
         Optional<Articulo> respuesta = articuloRepo.findById(idArticulo);
@@ -115,26 +122,28 @@ public class ArticuloServicio {
             articulo.setAprobado(false);
             articulo.setFecha(LocalDate.now());
             
-            Usuario usuario = usuarioServicio.obtenerUsuario(idUsuario);
-            
-            articulo.setUsuario(usuario);
             articulo.setTitulo(titulo);
-            articulo.setParrafos(parrafos);
-            articulo.setTematicas(tematicas);
-            articulo.setTipos(tipos);
-            articulo.setComentarios(comentarios);
+   
+            List<Parrafo> parrafosSet = agregarParrafos(parrafos, articulo);
             
-            agregarParrafos(parrafos, articulo);
+            articulo.setParrafos(parrafosSet);
+            
+            List<Tematica> tematicasSet = agregarTematicas(tematicas, articulo);
+            
+            articulo.setTematicas(tematicasSet);
+            
+            List<Tipo> tiposSet = agregarTipos(tipos, articulo);
+            
+            articulo.setTipos(tiposSet);
+            
             agregarImagenes(archivos, articulo);
-            agregarTematicas(tematicas, articulo);
-            agregarTipos(tipos, articulo);
-            
+
             List<Imagen> imagenes = imagenServicio.obtenerImagenes(articulo.getId());
             articulo.setImagenes(imagenes);
-            agregarUsuario(usuario, articulo);
             
-            articuloRepo.save(articulo);
+            return articuloRepo.save(articulo);
         }
+        return null;
     }
     
     @Transactional
@@ -148,10 +157,12 @@ public class ArticuloServicio {
     }
     
     @Transactional
-    private void agregarParrafos(List<Parrafo> parrafos, Articulo articulo) throws MiException{
-        for (Parrafo p : parrafos) {
-            parrafoServicio.registrar(p.getCuerpo(),articulo.getId());
-        } 
+    private List<Parrafo> agregarParrafos(List<String> parrafos, Articulo articulo) throws MiException{
+        List<Parrafo> parrafosReturn = new ArrayList<>();
+        for (String p : parrafos) {
+            parrafosReturn.add(parrafoServicio.registrar(p,articulo.getId()));
+        }
+        return parrafosReturn;
     }
     
     @Transactional
@@ -162,17 +173,21 @@ public class ArticuloServicio {
     }
     
     @Transactional
-    private void agregarTematicas(List<Tematica> tematicas, Articulo articulo) throws MiException{
-        for (Tematica t : tematicas) {
-            tematicaServicio.asignarArticuloATematica(t.getId(), articulo.getId());
+    private List<Tematica> agregarTematicas(List<Long> tematicasId, Articulo articulo) throws MiException{
+        List<Tematica> tematicasReturn = new ArrayList<>();
+        for (Long t : tematicasId) {
+            tematicasReturn.add(tematicaServicio.asignarArticuloATematica(t, articulo.getId()));
         }
+        return tematicasReturn;
     }
     
     @Transactional
-    private void agregarTipos(List<Tipo> tipos, Articulo articulo) throws MiException{
-        for (Tipo tp : tipos) {
-            tipoServicio.assigmentArticuloToTipo(tp.getId(), articulo.getId());
+    private List<Tipo> agregarTipos(List<Long> tiposId, Articulo articulo) throws MiException{
+        List<Tipo> tiposReturn = new ArrayList<>();
+        for (Long tp : tiposId) {
+            tiposReturn.add(tipoServicio.assigmentArticuloToTipo(tp, articulo.getId()));
         }
+        return tiposReturn;
     } 
     
 }

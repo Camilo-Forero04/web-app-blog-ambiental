@@ -36,7 +36,6 @@ public class ArticuloServicio {
     private TipoServicio tipoServicio;
     @Autowired
     private ComentarioServicio comentarioServicio;
-    
     @Transactional
     public Articulo registrarArticulo(
             Long idUsuario, String titulo, List<MultipartFile> archivos,

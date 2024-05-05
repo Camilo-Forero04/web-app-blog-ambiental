@@ -78,12 +78,6 @@ public class ArticuloControlador {
             @RequestParam List<Long> tipos
     ){
         try{
-            System.out.println(idArticulo);
-            System.out.println(titulo);
-            System.out.println(archivos);
-            System.out.println(parrafos);
-            System.out.println(tematicas);
-            System.out.println(tipos);
             Articulo articulo = articuloServicio.actualizarArticulo(idArticulo, titulo, archivos, parrafos, tematicas, tipos);
             return ResponseEntity.status(201).body(articulo);
         }catch(Exception ex){

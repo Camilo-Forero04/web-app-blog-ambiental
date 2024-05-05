@@ -68,22 +68,28 @@ public class ArticuloControlador {
         }
     }
     
-//    @PutMapping("/actualizar/{id}")
-//    public ResponseEntity<Object> actualizar(
-//            @PathVariable("id") Long idArticulo,
-//            @RequestParam String titulo,
-//            @RequestParam List<MultipartFile> archivos,
-//            @RequestParam List<String> parrafos,
-//            @RequestParam List<Tematica> tematicas,
-//            @RequestParam List<Tipo> tipos
-//    ){
-//        try{
-//            Articulo articulo = articuloServicio.actualizarArticulo(idArticulo, titulo, archivos, parrafos, tematicas, tipos);
-//            return ResponseEntity.status(201).body(articulo);
-//        }catch(Exception ex){
-//            return ResponseEntity.status(404).body(ex.getMessage());
-//        }
-//    }
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Object> actualizar(
+            @PathVariable("id") Long idArticulo,
+            @RequestParam String titulo,
+            @RequestParam List<MultipartFile> archivos,
+            @RequestParam List<String> parrafos,
+            @RequestParam List<Long> tematicas,
+            @RequestParam List<Long> tipos
+    ){
+        try{
+            System.out.println(idArticulo);
+            System.out.println(titulo);
+            System.out.println(archivos);
+            System.out.println(parrafos);
+            System.out.println(tematicas);
+            System.out.println(tipos);
+            Articulo articulo = articuloServicio.actualizarArticulo(idArticulo, titulo, archivos, parrafos, tematicas, tipos);
+            return ResponseEntity.status(201).body(articulo);
+        }catch(Exception ex){
+            return ResponseEntity.status(500).body(ex.getMessage());
+        }
+    }
     
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Object> eliminar(@PathVariable("id") Long articuloId){

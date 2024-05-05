@@ -73,5 +73,14 @@ public class ParrafoServicio {
     @Transactional
     public void eliminar(Long id){
         parrafoRepositorio.deleteById(id);
+    
+    }
+
+    public List<Parrafo> obtenerParrafos(Long idArticulo) {
+        Optional<List<Parrafo>> respuesta = parrafoRepositorio.encontrarPorArticulo(idArticulo);
+        if (respuesta.isPresent()) {
+            return respuesta.get();
+        }
+        return null;
     }
 }

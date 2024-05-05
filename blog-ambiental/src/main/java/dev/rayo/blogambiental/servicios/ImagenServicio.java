@@ -69,7 +69,7 @@ public class ImagenServicio {
     }
 
     @Transactional
-    public void Eliminar(Long idImagen) {
+    public void eliminar(Long idImagen) {
         imagenRepo.deleteById(idImagen);
     }
     

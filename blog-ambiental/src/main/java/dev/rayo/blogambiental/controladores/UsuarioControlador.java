@@ -8,6 +8,7 @@ import dev.rayo.blogambiental.entidades.Usuario;
 import dev.rayo.blogambiental.servicios.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuario")
+@CrossOrigin("*")
 public class UsuarioControlador {
     
     @Autowired
@@ -58,7 +60,7 @@ public class UsuarioControlador {
     public ResponseEntity<Object> eliminar(@PathVariable("id") Long idUsuario){
         try{
             usuarioServicio.eliminar(idUsuario);
-            return ResponseEntity.status(200).body("Eliminado");//El codgio 204 (No content) podria ser mas apropiado, pero para indicar que la solicitud se procesó un 200 tambien esta OK
+            return ResponseEntity.status(200).body("Usuario Eliminado");//El codgio 204 (No content) podria ser mas apropiado, pero para indicar que la solicitud se procesó un 200 tambien esta OK
         }catch(Exception ex){
             return ResponseEntity.status(404).body("Error al eliminar");
         }

@@ -22,6 +22,7 @@ public class Imagen {
     private String name;
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] contenido;
 
     @ManyToOne(fetch=FetchType.LAZY)

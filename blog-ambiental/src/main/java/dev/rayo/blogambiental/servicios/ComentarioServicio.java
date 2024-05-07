@@ -45,7 +45,7 @@ public class ComentarioServicio {
         return null;
     }
     @Transactional
-    public void actualizar(Long idComentario, String cuerpo)throws MiException{
+    public Comentario actualizar(Long idComentario, String cuerpo)throws MiException{
         validar(cuerpo);
         Optional<Comentario> respuesta = comentarioRepositorio.findById(idComentario);
 
@@ -53,6 +53,9 @@ public class ComentarioServicio {
             Comentario comentario = respuesta.get();
             comentario.setCuerpo(cuerpo);
             comentarioRepositorio.save(comentario);
+            return comentario;
+        }else{
+            return null;
         }
     }
 

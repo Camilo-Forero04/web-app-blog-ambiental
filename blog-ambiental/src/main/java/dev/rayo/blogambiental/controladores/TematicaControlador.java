@@ -26,17 +26,17 @@ public class TematicaControlador {
         return tematicaServicio.listarTodasTematicas();
     }
 
-    @PostMapping("guardar")
+    @PostMapping("/guardar")
     public Tematica guardarTematica(@RequestBody Tematica tematicaEntrada) throws MiException {
         return tematicaServicio.crearNuevaTematica(tematicaEntrada);
     }
 
-    @PutMapping("modificar/{id}")
+    @PutMapping("/modificar/{id}")
     public Tematica modificarTematica(@RequestBody Tematica tematicaEntrada,@PathVariable("id") Long id) throws MiException {
         return tematicaServicio.actualizar(id,tematicaEntrada);
     }
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarTematica(@PathVariable("id") Long id) throws MiException {
         tematicaServicio.eliminar(id);
 

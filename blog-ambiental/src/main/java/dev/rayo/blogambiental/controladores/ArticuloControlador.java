@@ -20,7 +20,7 @@ public class ArticuloControlador {
     @Autowired
     private ArticuloServicio articuloServicio;
     
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<Articulo>> listaArticulos(){
         try{
             List<Articulo> articulos = articuloServicio.listarArticulosRelevantes();
@@ -30,7 +30,7 @@ public class ArticuloControlador {
         }
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/usuario/{id}")
     public ResponseEntity<List<Articulo>> listaArticulosUsuario(@PathVariable("id") Long idUsuario){
         try{
             List<Articulo> articulos = articuloServicio.listarArticulosDeUsuario(idUsuario);
@@ -40,7 +40,7 @@ public class ArticuloControlador {
         }
     }
     
-    @PostMapping("/agregar/{id}")
+    @PostMapping("/guardar/{id}")
     public ResponseEntity<Object> articulo(
             @PathVariable("id") Long idUsuario,
             @RequestParam String titulo,
@@ -59,7 +59,7 @@ public class ArticuloControlador {
         }
     }
     
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/modificar/{id}")
     public ResponseEntity<Object> actualizar(
             @PathVariable("id") Long idArticulo,
             @RequestParam String titulo,

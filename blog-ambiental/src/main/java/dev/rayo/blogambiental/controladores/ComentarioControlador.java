@@ -26,17 +26,17 @@ public class ComentarioControlador {
         return comentarioServicio.listarTodosComentarios(id_Articulo);
     }
 
-    @PostMapping("guardar/{id_Articulo}")
+    @PostMapping("/guardar/{id_Articulo}")
     public Comentario guardarComentario(@PathVariable ("id_Articulo") Long idArticulo,@RequestBody String cuerpo) throws MiException {
         return comentarioServicio.registrar(cuerpo,idArticulo);
     }
 
-    @PutMapping("modificar/{id_Comentario}")
+    @PutMapping("/modificar/{id_Comentario}")
     public Comentario modificarParrafo(@RequestBody String cuerpo,@PathVariable("id_Comentario") Long id) throws MiException {
         return comentarioServicio.actualizar(id,cuerpo);
     }
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public void eliminarComentario(@PathVariable("id") Long id) throws MiException {
         comentarioServicio.eliminar(id);
 

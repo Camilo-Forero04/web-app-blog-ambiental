@@ -25,17 +25,17 @@ public class TipoControlador {
         return tipoServicio.listarTodosTipos();
     }
 
-    @PostMapping("guardar")
+    @PostMapping("/guardar")
     public Tipo guardarTipo(@RequestBody Tipo tipoEntrada) throws MiException {
         return tipoServicio.registrar(tipoEntrada);
     }
 
-    @PutMapping("modificar/{id}")
+    @PutMapping("/modificar/{id}")
     public Tipo modificarTipo(@RequestBody Tipo tipoEntrada,@PathVariable("id") Long id) throws MiException {
         return tipoServicio.actualizar(id,tipoEntrada);
     }
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarTipo(@PathVariable("id") Long id) throws MiException {
         tipoServicio.eliminar(id);
 

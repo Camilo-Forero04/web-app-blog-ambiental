@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin("*")
+@CrossOrigin(origins="*")
 public class UsuarioControlador {
     
     @Autowired
@@ -36,7 +36,7 @@ public class UsuarioControlador {
         }
     }
     
-    @PostMapping("/registrar")
+    @PostMapping("/guardar")
     public ResponseEntity<Object> registar(@RequestParam String nombre, @RequestParam String email, @RequestParam String contraseña){
         try{
             Usuario usuario = usuarioServicio.registrar(nombre, email, contraseña);
@@ -46,7 +46,7 @@ public class UsuarioControlador {
         }
     }
     
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/modificar/{id}")
     public ResponseEntity<Object> actualizar(@PathVariable("id") Long idUsuario,@RequestParam String nombre, @RequestParam String email, @RequestParam String contraseña){
         try{
             Usuario usuario = usuarioServicio.actualizar(idUsuario,nombre, email, contraseña);

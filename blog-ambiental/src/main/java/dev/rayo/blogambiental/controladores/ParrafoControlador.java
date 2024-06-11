@@ -25,7 +25,7 @@ public class ParrafoControlador {
         return parrafoServicio.listarTodosParrafos(id_Articulo);
     }
 
-    @PostMapping("guardar/{id_Articulo}")
+    @PostMapping("/guardar/{id_Articulo}")
     public Parrafo guardarParrafo(@PathVariable ("id_Articulo") Long idArticulo,@RequestBody String cuerpo) throws MiException {
         System.out.println("el cuerpo registrado es: "+cuerpo);
         return parrafoServicio.registrar(cuerpo,idArticulo);
@@ -36,12 +36,12 @@ public class ParrafoControlador {
 //        return parrafoServicio.registrar(parrafoEntrante,idArticulo);
 //    }
 
-    @PutMapping("modificar/{id_Parrafo}")
+    @PutMapping("/modificar/{id_Parrafo}")
     public Parrafo modificarParrafo(@RequestBody String cuerpo,@PathVariable("id_Parrafo") Long id) throws MiException {
         return parrafoServicio.actualizar(id,cuerpo);
     }
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarParrafo(@PathVariable("id") Long id) throws MiException {
         parrafoServicio.eliminar(id);
 

@@ -1,12 +1,9 @@
-
 package dev.rayo.blogambiental.controladores;
 
 import dev.rayo.blogambiental.entidades.Articulo;
 import dev.rayo.blogambiental.entidades.Imagen;
 import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.servicios.ArticuloServicio;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,16 +15,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/imagen")
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 public class ImagenControlador {
-    
+
     @Autowired
     private ArticuloServicio articuloServicio;
 
     @GetMapping("/articulo/{id}")
-    public ResponseEntity<List<String>> obtenerImagenesArticulo(@PathVariable("id") Long idArticulo) throws MiException {
+    public ResponseEntity<List<String>> obtenerImagenesArticulo(@PathVariable("id") Long idArticulo) {
         try {
             Articulo articulo = articuloServicio.getById(idArticulo);
 
@@ -43,9 +43,10 @@ public class ImagenControlador {
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             return ResponseEntity.status(200).headers(headers).body(base64Images);
+        } catch (MiException e) {
+            return ResponseEntity.status(404).body(null);
         } catch (Exception e) {
-            return ResponseEntity.status(500).build();
+            return ResponseEntity.status(500).body(null);
         }
     }
 }
-

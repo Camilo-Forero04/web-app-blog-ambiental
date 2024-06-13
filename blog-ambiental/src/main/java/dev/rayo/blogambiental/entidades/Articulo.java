@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dev.rayo.blogambiental.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,8 +12,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,15 +34,18 @@ public class Articulo {
     private LocalDate fecha;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
-    private List<Parrafo> parrafos;
+    @JsonIgnoreProperties("articulo")
+    private List<Parrafo> parrafos = new ArrayList<>();
 
     private boolean isAprobado;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
-    private List<Imagen> imagenes;
+    @JsonIgnoreProperties("articulo")
+    private List<Imagen> imagenes = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
-    private List<Comentario> comentarios;
+    @JsonIgnoreProperties("articulo")
+    private List<Comentario> comentarios = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
@@ -59,13 +58,13 @@ public class Articulo {
             inverseJoinColumns = @JoinColumn(name = "id_tematica", referencedColumnName = "id")
     )
     @JsonIgnoreProperties("articulos")
-    private List<Tematica> tematicas;
+    private List<Tematica> tematicas = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "tipo_articulo",joinColumns = @JoinColumn(name = "id_articulo", referencedColumnName = "id"),
+            name = "tipo_articulo", joinColumns = @JoinColumn(name = "id_articulo", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_tipo", referencedColumnName = "id")
     )
     @JsonIgnoreProperties("articulos")
-    private List<Tipo> tipos;
+    private List<Tipo> tipos = new ArrayList<>();
 }

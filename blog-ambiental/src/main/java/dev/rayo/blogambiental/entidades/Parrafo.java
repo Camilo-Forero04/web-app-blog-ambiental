@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dev.rayo.blogambiental.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +21,8 @@ public class Parrafo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String cuerpo;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_articulo")
     @JsonIgnoreProperties("parrafos")
     private Articulo articulo;

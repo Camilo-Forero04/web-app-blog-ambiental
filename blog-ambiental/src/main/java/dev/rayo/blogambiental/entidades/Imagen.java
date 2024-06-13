@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dev.rayo.blogambiental.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,8 +21,8 @@ public class Imagen {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] contenido;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_articulo")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_articulo")
     @JsonIgnoreProperties("imagenes")
     private Articulo articulo;
 }

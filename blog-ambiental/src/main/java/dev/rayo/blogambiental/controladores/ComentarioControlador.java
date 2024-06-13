@@ -1,7 +1,6 @@
 package dev.rayo.blogambiental.controladores;
 
 import dev.rayo.blogambiental.entidades.Comentario;
-import dev.rayo.blogambiental.entidades.Parrafo;
 import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.servicios.ComentarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,34 +11,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-// esto es para la conexión de frontend con backend
-@CrossOrigin(origins="*")
-// para definir la url
+@CrossOrigin(origins = "*")
 @RequestMapping("/comentarios")
 public class ComentarioControlador {
 
     @Autowired
     private ComentarioServicio comentarioServicio;
 
-    @RequestMapping(value = "/listar/{id_Articulo}",method = RequestMethod.GET)
-    public List<Comentario> getAllComentarios(@PathVariable("id_Articulo") Long id_Articulo){
-        return comentarioServicio.listarTodosComentarios(id_Articulo);
+    @GetMapping("/listar/{idArticulo}")
+    public ResponseEntity<List<Comentario>> getAllComentarios(@PathVariable("idArticulo") Long idArticulo) {
+        List<Comentario> comentarios = comentarioServicio.listarTodosComentarios(idArticulo);
+        return new ResponseEntity<>(comentarios, HttpStatus.OK);
     }
 
-    @PostMapping("/guardar/{id_Articulo}")
-    public Comentario guardarComentario(@PathVariable ("id_Articulo") Long idArticulo,@RequestBody String cuerpo) throws MiException {
-        return comentarioServicio.registrar(cuerpo,idArticulo);
+    @PostMapping("/guardar/{idArticulo}")
+    public ResponseEntity<Comentario> guardarComentario(@PathVariable("idArticulo") Long idArticulo, @RequestBody String cuerpo) throws MiException {
+        Comentario comentario = comentarioServicio.registrar(cuerpo, idArticulo);
+        return new ResponseEntity<>(comentario, HttpStatus.CREATED);
     }
 
-    @PutMapping("/modificar/{id_Comentario}")
-    public Comentario modificarParrafo(@RequestBody String cuerpo,@PathVariable("id_Comentario") Long id) throws MiException {
-        return comentarioServicio.actualizar(id,cuerpo);
+    @PutMapping("/modificar/{idComentario}")
+    public ResponseEntity<Comentario> modificarComentario(@PathVariable("idComentario") Long id, @RequestBody String cuerpo) throws MiException {
+        Comentario comentario = comentarioServicio.actualizar(id, cuerpo);
+        return new ResponseEntity<>(comentario, HttpStatus.OK);
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public void eliminarComentario(@PathVariable("id") Long id) throws MiException {
+    public ResponseEntity<Void> eliminarComentario(@PathVariable("id") Long id) throws MiException {
         comentarioServicio.eliminar(id);
-
-
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

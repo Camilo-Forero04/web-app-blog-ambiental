@@ -1,8 +1,6 @@
-
 package dev.rayo.blogambiental.controladores;
 
-import dev.rayo.blogambiental.entidades.Articulo;
-
+import dev.rayo.blogambiental.dto.ArticuloDTO;
 import dev.rayo.blogambiental.excepciones.MiException;
 import dev.rayo.blogambiental.servicios.ArticuloServicio;
 import java.util.List;
@@ -16,49 +14,47 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins="*")
 @RequestMapping("/articulo")
 public class ArticuloControlador {
-    
+
     @Autowired
     private ArticuloServicio articuloServicio;
-    
+
     @GetMapping("/listar")
-    public ResponseEntity<List<Articulo>> listaArticulos(){
-        try{
-            List<Articulo> articulos = articuloServicio.listarArticulosRelevantes();
+    public ResponseEntity<List<ArticuloDTO>> listaArticulos() {
+        try {
+            List<ArticuloDTO> articulos = articuloServicio.listarArticulosRelevantes();
             return ResponseEntity.status(200).body(articulos);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.status(404).body(null);
         }
     }
-    
+
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<Articulo>> listaArticulosUsuario(@PathVariable("id") Long idUsuario){
-        try{
-            List<Articulo> articulos = articuloServicio.listarArticulosDeUsuario(idUsuario);
+    public ResponseEntity<List<ArticuloDTO>> listaArticulosUsuario(@PathVariable("id") Long idUsuario) {
+        try {
+            List<ArticuloDTO> articulos = articuloServicio.listarArticulosDeUsuario(idUsuario);
             return ResponseEntity.status(200).body(articulos);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return ResponseEntity.status(404).body(null);
         }
     }
-    
+
     @PostMapping("/guardar/{id}")
     public ResponseEntity<Object> articulo(
             @PathVariable("id") Long idUsuario,
             @RequestParam String titulo,
-            @RequestParam List<MultipartFile> archivos,
+            @RequestParam(required = false) List<MultipartFile> archivos,
             @RequestParam List<String> parrafos,
             @RequestParam List<Long> tematicasId,
             @RequestParam List<Long> tiposId
-    ){
-        try{
-            System.out.println(tematicasId);
-            System.out.println(tiposId);
-            Articulo articulo = articuloServicio.registrarArticulo(idUsuario , titulo, archivos, parrafos, tematicasId, tiposId);
-            return ResponseEntity.status(201).body(articulo);
-        }catch(Exception ex){
+    ) {
+        try {
+            ArticuloDTO articuloDTO = articuloServicio.registrarArticulo(idUsuario, titulo, archivos, parrafos, tematicasId, tiposId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(articuloDTO);
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
-    
+
     @PutMapping("/modificar/{id}")
     public ResponseEntity<Object> actualizar(
             @PathVariable("id") Long idArticulo,
@@ -67,22 +63,22 @@ public class ArticuloControlador {
             @RequestParam List<String> parrafos,
             @RequestParam List<Long> tematicas,
             @RequestParam List<Long> tipos
-    ){
-        try{
-            Articulo articulo = articuloServicio.actualizarArticulo(idArticulo, titulo, archivos, parrafos, tematicas, tipos);
-            return ResponseEntity.status(201).body(articulo);
-        }catch(Exception ex){
+    ) {
+        try {
+            ArticuloDTO articuloDTO = articuloServicio.actualizarArticulo(idArticulo, titulo, archivos, parrafos, tematicas, tipos);
+            return ResponseEntity.status(HttpStatus.CREATED).body(articuloDTO);
+        } catch (Exception ex) {
             return ResponseEntity.status(500).body(ex.getMessage());
         }
     }
-    
+
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Object> eliminar(@PathVariable("id") Long articuloId){
-        try{
+    public ResponseEntity<Object> eliminar(@PathVariable("id") Long articuloId) {
+        try {
             articuloServicio.eliminarArticulo(articuloId);
             return ResponseEntity.status(200).body("Articulo eliminado");
-        }catch(Exception ex){
-            return ResponseEntity.status(404).body("Error al eliminar");   
+        } catch (Exception ex) {
+            return ResponseEntity.status(404).body("Error al eliminar");
         }
     }
 }

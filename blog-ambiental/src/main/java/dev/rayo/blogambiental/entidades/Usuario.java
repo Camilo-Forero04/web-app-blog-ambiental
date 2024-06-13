@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dev.rayo.blogambiental.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,6 +24,8 @@ public class Usuario {
     private String nombre;
     private String contraseña;
     private String email;
-    @OneToMany(fetch=FetchType.LAZY,mappedBy="usuario")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("usuario")
     private List<Articulo> articulosPublicados;
 }

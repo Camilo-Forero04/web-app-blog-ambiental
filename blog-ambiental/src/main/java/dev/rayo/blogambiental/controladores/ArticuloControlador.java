@@ -44,11 +44,11 @@ public class ArticuloControlador {
             @RequestParam String titulo,
             @RequestParam(required = false) List<MultipartFile> archivos,
             @RequestParam List<String> parrafos,
-            @RequestParam List<Long> tematicasId,
-            @RequestParam List<Long> tiposId
+            @RequestParam List<Long> tematicas,
+            @RequestParam List<Long> tipos
     ) {
         try {
-            ArticuloDTO articuloDTO = articuloServicio.registrarArticulo(idUsuario, titulo, archivos, parrafos, tematicasId, tiposId);
+            ArticuloDTO articuloDTO = articuloServicio.registrarArticulo(idUsuario, titulo, archivos, parrafos, tematicas, tipos);
             return ResponseEntity.status(HttpStatus.CREATED).body(articuloDTO);
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());

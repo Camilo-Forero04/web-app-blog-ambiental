@@ -18,6 +18,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Data
@@ -33,17 +34,17 @@ public class Articulo {
 
     private LocalDate fecha;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("articulo")
     private List<Parrafo> parrafos = new ArrayList<>();
 
     private boolean isAprobado;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("articulo")
     private List<Imagen> imagenes = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo",cascade = CascadeType.ALL)
     @JsonIgnoreProperties("articulo")
     private List<Comentario> comentarios = new ArrayList<>();
 

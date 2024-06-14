@@ -51,7 +51,7 @@ public class TematicaServicio {
         if (respuestaArticulo.isPresent() && respuestaTematica.isPresent()) {
             Tematica tematica = respuestaTematica.get();
             Articulo articulo = respuestaArticulo.get();
-            tematica.getArticulos().add(articulo);
+
             return tematicaRepo.save(tematica);
         }
         return null;

@@ -22,7 +22,5 @@ public class Tipo {
     private Long id;
     private String nombre;
 
-    @ManyToMany(mappedBy = "tipos", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("tipos")
-    private List<Articulo> articulos;
+
 }

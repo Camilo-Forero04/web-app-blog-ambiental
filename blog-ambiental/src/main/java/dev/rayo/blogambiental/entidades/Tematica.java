@@ -18,7 +18,5 @@ public class Tematica {
 
     private String nombre;
 
-    @ManyToMany(mappedBy="tematicas", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("tematicas")
-    private List<Articulo> articulos;
+
 }

@@ -82,9 +82,9 @@ public class TipoServicio {
             List<Articulo> articulos = null;
             Tipo tipo = tipoEncontrado.get(); // es el tipo (entidad) buscado por id
             Articulo articulo = articuloEncontrado.get(); // es el articulo (entidad) buscado por id
-            articulos = tipo.getArticulos(); //una lista con todos articulos relacionados a tipo
+
             articulos.add(articulo);  // a la lista se le agrega el nuevo articulo asignado
-            tipo.setArticulos(articulos); // a la entidad tipo se le envia la lista de articulos
+
             return tipoRepositorio.save(tipo); // se procede a guardar la entidad tipo
         }
         return null;

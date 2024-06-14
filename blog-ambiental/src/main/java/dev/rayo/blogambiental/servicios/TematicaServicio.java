@@ -45,14 +45,11 @@ public class TematicaServicio {
     }
     
     @Transactional
-    public Tematica asignarArticuloATematica(Long tematicaId, Long articuloId){
+    public Tematica buscarTematica(Long tematicaId){
         Optional<Tematica> respuestaTematica = tematicaRepo.findById(tematicaId);
-        Optional<Articulo> respuestaArticulo = articuloRepo.findById(articuloId);
-        if (respuestaArticulo.isPresent() && respuestaTematica.isPresent()) {
+        if (respuestaTematica.isPresent()) {
             Tematica tematica = respuestaTematica.get();
-            Articulo articulo = respuestaArticulo.get();
-
-            return tematicaRepo.save(tematica);
+            return tematica;
         }
         return null;
     }

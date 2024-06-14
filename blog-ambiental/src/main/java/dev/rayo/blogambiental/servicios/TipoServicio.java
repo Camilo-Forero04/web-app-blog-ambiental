@@ -75,19 +75,14 @@ public class TipoServicio {
     }
 
     @Transactional
-    public Tipo assigmentArticuloToTipo(Long idTipo, Long idArticulo){
+    public Tipo buscarTipo(Long idTipo) throws MiException{
         Optional<Tipo> tipoEncontrado = tipoRepositorio.findById(idTipo);
-        Optional<Articulo> articuloEncontrado = articuloRepositorio.findById(idArticulo);
-        if(tipoEncontrado.isPresent() && articuloEncontrado.isPresent()){
-            List<Articulo> articulos = null;
+        if(tipoEncontrado.isPresent()){
             Tipo tipo = tipoEncontrado.get(); // es el tipo (entidad) buscado por id
-            Articulo articulo = articuloEncontrado.get(); // es el articulo (entidad) buscado por id
-
-            articulos.add(articulo);  // a la lista se le agrega el nuevo articulo asignado
-
-            return tipoRepositorio.save(tipo); // se procede a guardar la entidad tipo
+            return tipo;
+        }else{
+            throw new MiException("Tipo no encontrado");
         }
-        return null;
     }
 
     @Transactional

@@ -218,7 +218,7 @@ public class ArticuloServicio {
     protected List<Tematica> agregarTematicas(List<Long> tematicasId, Articulo articulo) throws MiException {
         List<Tematica> tematicasReturn = new ArrayList<>();
         for (Long t : tematicasId) {
-            tematicasReturn.add(tematicaServicio.asignarArticuloATematica(t, articulo.getId()));
+            tematicasReturn.add(tematicaServicio.buscarTematica(t));
         }
         return tematicasReturn;
     }
@@ -227,7 +227,7 @@ public class ArticuloServicio {
     protected List<Tipo> agregarTipos(List<Long> tiposId, Articulo articulo) throws MiException {
         List<Tipo> tiposReturn = new ArrayList<>();
         for (Long tp : tiposId) {
-            tiposReturn.add(tipoServicio.assigmentArticuloToTipo(tp, articulo.getId()));
+            tiposReturn.add(tipoServicio.buscarTipo(tp));
         }
         return tiposReturn;
     }

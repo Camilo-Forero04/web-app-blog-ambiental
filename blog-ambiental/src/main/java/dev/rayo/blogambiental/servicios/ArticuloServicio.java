@@ -130,8 +130,10 @@ public class ArticuloServicio {
             List<Tipo> tiposSet = agregarTipos(tipos, articulo);
             articulo.setTipos(tiposSet);
 
-            List<Imagen> imagenes = actualizarImagenes(archivos, articulo);
-            articulo.setImagenes(imagenes);
+            if (archivos != null && !archivos.isEmpty()) {
+                List<Imagen> imagenes = actualizarImagenes(archivos, articulo);
+                articulo.setImagenes(imagenes);
+            }
 
             articulo = articuloRepo.save(articulo);
 

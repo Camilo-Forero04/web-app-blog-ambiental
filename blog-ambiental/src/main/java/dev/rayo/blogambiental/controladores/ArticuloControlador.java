@@ -70,7 +70,7 @@ public class ArticuloControlador {
     public ResponseEntity<Object> actualizar(
             @PathVariable("id") Long idArticulo,
             @RequestParam String titulo,
-            @RequestParam List<MultipartFile> archivos,
+            @RequestParam(required = false) List<MultipartFile> archivos,
             @RequestParam List<String> parrafos,
             @RequestParam List<Long> tematicas,
             @RequestParam List<Long> tipos

@@ -16,6 +16,6 @@ import org.springframework.stereotype.Repository;
 public interface ArticuloRepositorio extends JpaRepository<Articulo,Long>  {
     @Query("SELECT a FROM Articulo a WHERE a.usuario.id = :id_usuario")
     Optional<List<Articulo>> buscarPorUsuario(@Param("id_usuario") Long idUsuario);
-    @Query("SELECT a FROM Articulo a ORDER BY a.fecha DESC LIMIT 5")
+    @Query("SELECT a FROM Articulo a ORDER BY a.fecha DESC")
     Optional<List<Articulo>> listar5Articulos();
 }

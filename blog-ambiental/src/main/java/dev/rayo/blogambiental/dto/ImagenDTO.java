@@ -4,14 +4,14 @@ public class ImagenDTO {
     private Long id;
     private String mime;
     private String name;
-    private byte[] contenido;
+    private String contenido; // Cambiar byte[] a String
     private Long articuloId;
 
-    public ImagenDTO(Long id, String mime, String name, byte[] contenido, Long articuloId) {
+    public ImagenDTO(Long id, String mime, String name, String contenido, Long articuloId) {
         this.id = id;
         this.mime = mime;
         this.name = name;
-        this.contenido = contenido;
+        this.contenido = contenido; // Cambiar byte[] a String
         this.articuloId = articuloId;
     }
 
@@ -38,5 +38,21 @@ public class ImagenDTO {
 
     public void setMime(String mime) {
         this.mime = mime;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public Long getArticuloId() {
+        return articuloId;
+    }
+
+    public void setArticuloId(Long articuloId) {
+        this.articuloId = articuloId;
     }
 }

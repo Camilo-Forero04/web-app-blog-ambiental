@@ -28,6 +28,17 @@ public class ArticuloControlador {
         }
     }
 
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<ArticuloDTO> obtenerArticulo(@PathVariable("id") Long idArticulo) {
+        try {
+            ArticuloDTO articulo = articuloServicio.obtenerArticuloPorId(idArticulo);
+            return ResponseEntity.status(200).body(articulo);
+        } catch (Exception ex) {
+            return ResponseEntity.status(404).body(null);
+        }
+    }
+
+
     @GetMapping("/usuario/{id}")
     public ResponseEntity<List<ArticuloDTO>> listaArticulosUsuario(@PathVariable("id") Long idUsuario) {
         try {

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 @Service
 public class ArticuloServicio {
@@ -66,7 +67,8 @@ public class ArticuloServicio {
     }
 
     private ImagenDTO convertirImagenADTO(Imagen imagen) {
-        return new ImagenDTO(imagen.getId(), imagen.getMime(), imagen.getName(), imagen.getContenido(), imagen.getArticulo().getId());
+        String base64Content = Base64.encodeBase64String(imagen.getContenido());
+        return new ImagenDTO(imagen.getId(), imagen.getMime(), imagen.getName(), base64Content, imagen.getArticulo().getId());
     }
 
     @Transactional
@@ -236,6 +238,17 @@ public class ArticuloServicio {
     public void eliminarArticulo(Long id){
         articuloRepo.deleteById(id);
     }
+
+    // Método agregado para obtener un artículo por su ID
+    public ArticuloDTO obtenerArticuloPorId(Long idArticulo) throws MiException {
+        Optional<Articulo> respuesta = articuloRepo.findById(idArticulo);
+        if (respuesta.isPresent()) {
+            return convertirADTO(respuesta.get());
+        } else {
+            throw new MiException("Artículo no encontrado");
+        }
+    }
+
     public Articulo getById(Long idArticulo) throws MiException {
         try {
             Optional<Articulo> respuesta = articuloRepo.findById(idArticulo);
